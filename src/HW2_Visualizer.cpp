@@ -1,4 +1,4 @@
-#include "HW2_VISUALIZER.h"
+#include <Visualization/HW2_Visualizer.hpp>
 
 HW2_VIZ::HW2_VIZ ()
 {

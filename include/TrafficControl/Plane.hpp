@@ -3,20 +3,22 @@
 #include <string>
 #include <random>
 #include <utility>
+#include <map>
 
 class Plane {
 private:
-    double pos_, vel_, distance_, loiterTime_;
+    using AirspaceType = std::map<std::pair<std::string, std::string>, double>;
+    double position_, velocity_, distance_, loiterTime_;
     bool atSCE;
     std::string origin_, destination_;
-    //TODO: implement container Question 1;
+    static const AirspaceType airspace;
 protected:
     double waitTime_;
 public:
     Plane(std::string from, std::string to): origin_(from), destination_(to){
         distance_= 0; //TODO: calculate distance using container Question 1;
-        pos_ = 0;
-        vel_ = 0;
+        position_ = 0;
+        velocity_ = 0;
         waitTime_ = 0;
         loiterTime_ = 0;
         atSCE = false;
@@ -35,8 +37,8 @@ public:
             if (waitTime_ < 0) waitTime_ = 0;
             return;
         }
-        if (pos_ > distance_){
-            pos_ += vel_*dt;
+        if (position_ > distance_){
+            position_ += velocity_*dt;
             atSCE = 0;
             return;
         }
@@ -45,19 +47,19 @@ public:
         }
         timeOnGround();
         std::swap(origin_,destination_);
-        pos_ = 0;
+        position_ = 0;
     };
 
     double position() const {
-        return pos_;
+        return position_;
     };
 
     double velocity() const {
-        return pos_;
+        return velocity_;
     };
 
     double loiterTime() const {
-        return pos_;
+        return loiterTime_;
     };
 
     std::string origin() const {
@@ -69,7 +71,7 @@ public:
     };
 
     void velocity(const double& vel){
-        vel_ = vel;
+        velocity_ = vel;
     };
 
     void loiterTime(const double& _loiterTime) {
@@ -88,6 +90,15 @@ public:
         std::normal_distribution<> d{ mean, std };
         return d(gen);
     }
+};
+
+const Plane::AirspaceType Plane::airspace = { 
+    { {"SCE","ORD"}, 640}, // miles
+    { {"ORD","SCE"}, 640},
+    { {"SCE","PHL"}, 160},
+    { {"PHL","SCE"}, 160},
+    { {"SCE","EWR"}, 220},
+    { {"EWR","SCE"}, 220},
 };
 
 #endif /* PLANE_HPP */
