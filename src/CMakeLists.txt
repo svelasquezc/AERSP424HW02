@@ -23,6 +23,13 @@ add_executable(${PROJECT_NAME} main.cpp ${AIRPORT_HEADERS})
 target_link_libraries(${PROJECT_NAME} PRIVATE airportControl)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDLVisualization)
 
+
+# Copy the resource image to the same folder as the executable file.
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD    # Adds a post-build event to MyTest
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different       # which executes "cmake - E copy_if_different..."
+        "${CMAKE_SOURCE_DIR}/resources/map.bmp" # <--this is also in-file
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)             # <--this is out-file path
+
 # IDEs should put the headers in a nice place
 source_group(
   TREE "${PROJECT_SOURCE_DIR}/include"
