@@ -4,46 +4,47 @@
 #include <random>
 #include <utility>
 #include <map>
+#include <tuple>
 
 class Plane {
 private:
     using AirspaceType = std::map<std::pair<std::string, std::string>, double>;
     double position_, velocity_, distance_, loiterTime_;
-    bool atSCE;
+    bool atSCE_;
     std::string origin_, destination_;
     static const AirspaceType airspace;
 protected:
     double waitTime_;
 public:
     Plane(std::string from, std::string to): origin_(from), destination_(to){
-        distance_= airspace[{origin_, destination_}]; //TODO: calculate distance using container Question 1;
+        distance_= airspace.at({origin_, destination_});
         position_ = 0;
         velocity_ = 0;
         waitTime_ = 0;
         loiterTime_ = 0;
-        atSCE = false;
+        atSCE_ = false;
     };
 
     virtual ~Plane() = default;
 
     void operate(const double& dt){
-        if (loiterTime_ != 0){
+        if (loiterTime_ > 0){
             loiterTime_ -= dt;
             if (loiterTime_ < 0) loiterTime_ = 0;
             return;
         }
-        if (waitTime_ != 0){
+        if (waitTime_ > 0){
             waitTime_ -= dt;
             if (waitTime_ < 0) waitTime_ = 0;
             return;
         }
         if (position_ < distance_){
             position_ += velocity_*dt;
-            atSCE = 0;
+            atSCE_ = false;
             return;
         }
         if (destination_ == "SCE"){
-            atSCE = true;
+            atSCE_ = true;
         }
         timeOnGround();
         std::swap(origin_,destination_);
@@ -78,13 +79,17 @@ public:
         loiterTime_ = _loiterTime;
     };
 
+    bool atSCE() const {
+        return atSCE_;
+    };
+
     double distanceToSCE() const {
         if (destination_ == "SCE") return distance_ - position_;
         return -1;
     };
 
     virtual std::string planeType() const {
-        return "GA";
+        return "NA";
     };
 
     virtual void timeOnGround() = 0;

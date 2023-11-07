@@ -14,7 +14,7 @@ public:
     ~Airliner() = default;
     
     std::string planeType() const override {
-        return "Airline";
+        return airline_;
     }
     
     void timeOnGround() override {

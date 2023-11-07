@@ -7,7 +7,7 @@
 
 
 int main(int argc, char** argv){
-    const int timeStep = 20;
+    const int timeStep = 50;
     auto AA5915 = std::make_shared<Airliner>(Airliner("AA", "SCE", "PHL"));
     auto UA5236 = std::make_shared<Airliner>(Airliner("UA", "SCE", "ORD"));
     auto UA4465 = std::make_shared<Airliner>(Airliner("UA", "SCE", "EWR"));
@@ -16,13 +16,13 @@ int main(int argc, char** argv){
     auto GA_EWR = std::make_shared<GeneralAviation>(GeneralAviation("SCE", "EWR"));
     auto GA_ORD = std::make_shared<GeneralAviation>(GeneralAviation("SCE", "ORD"));
 
-    AA5915->velocity(470);
-    UA5236->velocity(515);
-    UA4465->velocity(480);
-    AA6240->velocity(500);
-    GA_PHL->velocity(140);
-    GA_EWR->velocity(160);
-    GA_ORD->velocity(180);
+    AA5915->velocity(470/60);
+    UA5236->velocity(515/60);
+    UA4465->velocity(480/60);
+    AA6240->velocity(500/60);
+    GA_PHL->velocity(140/60);
+    GA_EWR->velocity(160/60);
+    GA_ORD->velocity(180/60);
 
     auto atc = ATC();
     atc.registerPlane(AA5915); atc.registerPlane(UA5236); atc.registerPlane(UA4465); atc.registerPlane(AA6240);
