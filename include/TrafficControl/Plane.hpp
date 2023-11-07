@@ -37,7 +37,7 @@ public:
             if (waitTime_ < 0) waitTime_ = 0;
             return;
         }
-        if (position_ > distance_){
+        if (position_ < distance_){
             position_ += velocity_*dt;
             atSCE = 0;
             return;
