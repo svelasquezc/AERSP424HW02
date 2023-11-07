@@ -31,7 +31,7 @@ void HW2_VIZ::update (double dt)
   SDL_Delay(dt);
 }
 
-void HW2_VIZ::visualize_plane ( std::string airline, std::string origin, std::string des, double pos )
+void HW2_VIZ::visualizePlane ( std::string airline, std::string origin, std::string des, double pos )
 {
   // compute new triangle to draw
   SDL_Color  color = { 0, 0, 0, 255 };
@@ -98,4 +98,26 @@ void HW2_VIZ::visualize_plane ( std::string airline, std::string origin, std::st
 
   p_viz.planes_info[key].v3.position.x += v0.position.x;
   p_viz.planes_info[key].v3.position.y += v0.position.y;
+}
+
+bool HW2_VIZ::close(){
+  bool quit = false;
+  SDL_WaitEvent( &event );
+  
+  switch ( event.type )
+  {
+    case SDL_QUIT:
+    quit = true;
+    break;
+  }
+
+  return quit;
+}
+
+HW2_VIZ::~HW2_VIZ(){
+  SDL_DestroyTexture( texture );
+  SDL_FreeSurface( image );
+  SDL_DestroyRenderer( renderer );
+  SDL_DestroyWindow( win );
+  SDL_Quit();
 }

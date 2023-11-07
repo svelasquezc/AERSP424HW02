@@ -47,8 +47,11 @@ class HW2_VIZ
 public:
 	HW2_VIZ ();
 
-  void visualize_plane (std::string airline, std::string origin, std::string des, double pos);
+  void visualizePlane (std::string airline, std::string origin, std::string des, double pos);
   void update (double dt);
+  void close();
+
+  ~HW2_VIZ();
 };
 
 #endif // !HW2_VISUALIZER
