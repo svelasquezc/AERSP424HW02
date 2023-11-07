@@ -16,7 +16,7 @@ protected:
     double waitTime_;
 public:
     Plane(std::string from, std::string to): origin_(from), destination_(to){
-        distance_= 0; //TODO: calculate distance using container Question 1;
+        distance_= airspace[{origin_, destination_}]; //TODO: calculate distance using container Question 1;
         position_ = 0;
         velocity_ = 0;
         waitTime_ = 0;
@@ -24,7 +24,7 @@ public:
         atSCE = false;
     };
 
-    virtual ~Plane(){};
+    virtual ~Plane() = default;
 
     void operate(const double& dt){
         if (loiterTime_ != 0){
@@ -78,9 +78,14 @@ public:
         loiterTime_ = _loiterTime;
     };
 
+    double distanceToSCE() const {
+        if (destination_ == "SCE") return distance_ - position_;
+        return -1;
+    };
+
     virtual std::string planeType() const {
         return "GA";
-    }
+    };
 
     virtual void timeOnGround() = 0;
 
@@ -89,7 +94,7 @@ public:
         std::mt19937 gen{ rd() };
         std::normal_distribution<> d{ mean, std };
         return d(gen);
-    }
+    };
 };
 
 const Plane::AirspaceType Plane::airspace = { 
