@@ -101,7 +101,6 @@ void HW2_VIZ::visualizePlane ( std::string airline, std::string origin, std::str
 }
 
 bool HW2_VIZ::close(){
-  bool quit = false;
   SDL_WaitEvent( &event );
   
   switch ( event.type )

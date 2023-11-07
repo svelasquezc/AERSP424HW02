@@ -22,17 +22,15 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     # main CMakeLists.
     include(CTest)
 
-    # find_package(OpenGL REQUIRED)
-
-    # include(FetchContent)
-
-    # FetchContent_Declare(
-    #     SDL2
-    #     GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-    #     GIT_TAG release-2.28.5
-    # )
-    # set(BUILD_EXAMPLES OFF CACHE INTERNAL "")
-    # FetchContent_MakeAvailable(SDL2)
+     find_package(OpenGL REQUIRED)
+     include(FetchContent)
+     FetchContent_Declare(
+         SDL2
+         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+         GIT_TAG release-2.28.5
+     )
+     set(BUILD_EXAMPLES OFF CACHE INTERNAL "")
+     FetchContent_MakeAvailable(SDL2)
 
 endif()
 

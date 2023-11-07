@@ -49,7 +49,7 @@ public:
 
   void visualizePlane (std::string airline, std::string origin, std::string des, double pos);
   void update (double dt);
-  void close();
+  bool close();
 
   ~HW2_VIZ();
 };
