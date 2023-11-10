@@ -30,7 +30,7 @@ public:
                                                                   {"PHL", {1030,425}},
                                                                   {"EWR", {1080,345}},
   };
-  std::map<std::string, SDL_Color> plane_colors = { {"AA", {255,0,0,255}}, {"UA", {0,0,255,255}}, {"NA", {0,255,0,255}} };
+  std::map<std::string, SDL_Color> plane_colors = { {"AA", {255,0,0,255}}, {"UA", {0,0,255,255}}, {"GA", {0,255,0,255}} };
   std::map<std::array<std::string,3>, plane_draw> planes_info;
 };
 

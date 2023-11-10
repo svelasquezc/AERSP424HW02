@@ -3,14 +3,15 @@
 
 #include <memory>
 #include <vector>
+#include <iostream>
 
 #include "Plane.hpp"
 
 
 class ATC {
 private:
-    static const int MAX_LANDED_PLANE_NUM = 2;
-    static const int AIRSPACE_DISTANCE = 50;
+    static constexpr int MAX_LANDED_PLANE_NUM = 2;
+    static constexpr int AIRSPACE_DISTANCE = 50;
     std::vector<std::shared_ptr<Plane>> registeredPlanes;
     
 public:
@@ -21,17 +22,17 @@ public:
         registeredPlanes.push_back(plane_ptr);
     }
 
-    void controlTraffic(const unsigned int currentPlaneNumber){
+    void controlTraffic(){
         unsigned int landedPlanes = 0;
-        for (unsigned int i=0; i< currentPlaneNumber; ++i){
-            landedPlanes += registeredPlanes[i]->atSCE();
-        }
+        for (auto plane_ptr : registeredPlanes) landedPlanes += plane_ptr->atSCE();
+
         if (landedPlanes < MAX_LANDED_PLANE_NUM) return;
-        for (unsigned int i=0; i< currentPlaneNumber; ++i){
-            if (!registeredPlanes[i]->atSCE() &&
-             registeredPlanes[i]->distanceToSCE() <= AIRSPACE_DISTANCE &&
-             registeredPlanes[i]->loiterTime() == 0) 
-             registeredPlanes[i]->loiterTime(100);
+
+        for (auto plane_ptr : registeredPlanes){
+            if (!plane_ptr->atSCE() &&
+             plane_ptr->distanceToSCE() <= AIRSPACE_DISTANCE &&
+             plane_ptr->loiterTime() == 0) 
+             plane_ptr->loiterTime(100);
         }
     }
 };

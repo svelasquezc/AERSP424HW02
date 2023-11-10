@@ -18,10 +18,10 @@ protected:
 public:
     Plane(std::string from, std::string to): origin_(from), destination_(to){
         distance_= airspace.at({origin_, destination_});
-        position_ = 0;
-        velocity_ = 0;
-        waitTime_ = 0;
-        loiterTime_ = 0;
+        position_ = 0.0;
+        velocity_ = 0.0;
+        waitTime_ = 0.0;
+        loiterTime_ = 0.0;
         atSCE_ = false;
     };
 
@@ -40,6 +40,7 @@ public:
         }
         if (position_ < distance_){
             position_ += velocity_*dt;
+            if (position_ > distance_) position_ = distance_; 
             atSCE_ = false;
             return;
         }
@@ -48,7 +49,7 @@ public:
         }
         timeOnGround();
         std::swap(origin_,destination_);
-        position_ = 0;
+        position_ = 0.0;
     };
 
     double position() const {
@@ -89,7 +90,7 @@ public:
     };
 
     virtual std::string planeType() const {
-        return "NA";
+        return "GA";
     };
 
     virtual void timeOnGround() = 0;

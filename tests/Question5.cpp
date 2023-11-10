@@ -7,7 +7,7 @@
 
 
 int main(){
-    const int timeStep = 20;
+    const double timeStep = 20;
     std::unique_ptr<Plane> AA5915 = std::make_unique<Airliner>(Airliner("AA", "SCE", "PHL"));
     std::unique_ptr<Plane> UA5236 = std::make_unique<Airliner>(Airliner("UA", "SCE", "ORD"));
     std::unique_ptr<Plane> UA4465 = std::make_unique<Airliner>(Airliner("UA", "SCE", "EWR"));
@@ -16,13 +16,13 @@ int main(){
     std::unique_ptr<Plane> GA_EWR = std::make_unique<GeneralAviation>(GeneralAviation("SCE", "EWR"));
     std::unique_ptr<Plane> GA_ORD = std::make_unique<GeneralAviation>(GeneralAviation("SCE", "ORD"));
 
-    AA5915->velocity(470);
-    UA5236->velocity(515);
-    UA4465->velocity(480);
-    AA6240->velocity(500);
-    GA_PHL->velocity(140);
-    GA_EWR->velocity(160);
-    GA_ORD->velocity(180);
+    AA5915->velocity(470.0/3600);
+    UA5236->velocity(515.0/3600);
+    UA4465->velocity(480.0/3600);
+    AA6240->velocity(500.0/3600);
+    GA_PHL->velocity(140.0/3600);
+    GA_EWR->velocity(160.0/3600);
+    GA_ORD->velocity(180.0/3600);
 
     
 
@@ -43,6 +43,8 @@ int main(){
             std::cout << "GA_EWR position: "<< GA_EWR->position() <<std::endl;
             GA_ORD->operate(timeStep);
             std::cout << "GA_ORD position: "<< GA_ORD->position() <<std::endl;
+
+            nTimestep++;
     }
     return 0;
 }

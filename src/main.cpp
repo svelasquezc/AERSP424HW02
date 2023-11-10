@@ -7,7 +7,7 @@
 
 
 int main(int argc, char** argv){
-    const int timeStep = 50;
+    const double timeStep = 50.0;
     auto AA5915 = std::make_shared<Airliner>(Airliner("AA", "SCE", "PHL"));
     auto UA5236 = std::make_shared<Airliner>(Airliner("UA", "SCE", "ORD"));
     auto UA4465 = std::make_shared<Airliner>(Airliner("UA", "SCE", "EWR"));
@@ -16,13 +16,13 @@ int main(int argc, char** argv){
     auto GA_EWR = std::make_shared<GeneralAviation>(GeneralAviation("SCE", "EWR"));
     auto GA_ORD = std::make_shared<GeneralAviation>(GeneralAviation("SCE", "ORD"));
 
-    AA5915->velocity(470/60);
-    UA5236->velocity(515/60);
-    UA4465->velocity(480/60);
-    AA6240->velocity(500/60);
-    GA_PHL->velocity(140/60);
-    GA_EWR->velocity(160/60);
-    GA_ORD->velocity(180/60);
+    AA5915->velocity(470.0/3600);
+    UA5236->velocity(515.0/3600);
+    UA4465->velocity(480.0/3600);
+    AA6240->velocity(500.0/3600);
+    GA_PHL->velocity(140.0/3600);
+    GA_EWR->velocity(160.0/3600);
+    GA_ORD->velocity(180.0/3600);
 
     auto atc = ATC();
     atc.registerPlane(AA5915); atc.registerPlane(UA5236); atc.registerPlane(UA4465); atc.registerPlane(AA6240);
@@ -33,31 +33,26 @@ int main(int argc, char** argv){
     while (!viz.close()){
 
             AA5915->operate(timeStep);
-            atc.controlTraffic(0);
-            viz.visualizePlane(AA5915->planeType(), AA5915->origin(), AA5915->destination(), AA5915->position());
-
+            atc.controlTraffic();
             UA5236->operate(timeStep);
-            atc.controlTraffic(1);
-            viz.visualizePlane(UA5236->planeType(), UA5236->origin(), UA5236->destination(), UA5236->position());
-
+            atc.controlTraffic();
             UA4465->operate(timeStep);
-            atc.controlTraffic(2);
-            viz.visualizePlane(UA4465->planeType(), UA4465->origin(), UA4465->destination(), UA4465->position());
-
+            atc.controlTraffic();
             AA6240->operate(timeStep);
-            atc.controlTraffic(3);
-            viz.visualizePlane(AA6240->planeType(), AA6240->origin(), AA6240->destination(), AA6240->position());
-
+            atc.controlTraffic();
             GA_PHL->operate(timeStep);
-            atc.controlTraffic(4);
-            viz.visualizePlane(GA_PHL->planeType(), GA_PHL->origin(), GA_PHL->destination(), GA_PHL->position());
-
+            atc.controlTraffic();
             GA_EWR->operate(timeStep);
-            atc.controlTraffic(5);
-            viz.visualizePlane(GA_EWR->planeType(), GA_EWR->origin(), GA_EWR->destination(), GA_EWR->position());
-
+            atc.controlTraffic();
             GA_ORD->operate(timeStep);
-            atc.controlTraffic(6);
+            atc.controlTraffic();
+
+            viz.visualizePlane(AA5915->planeType(), AA5915->origin(), AA5915->destination(), AA5915->position());
+            viz.visualizePlane(UA5236->planeType(), UA5236->origin(), UA5236->destination(), UA5236->position());
+            viz.visualizePlane(UA4465->planeType(), UA4465->origin(), UA4465->destination(), UA4465->position());
+            viz.visualizePlane(AA6240->planeType(), AA6240->origin(), AA6240->destination(), AA6240->position());
+            viz.visualizePlane(GA_PHL->planeType(), GA_PHL->origin(), GA_PHL->destination(), GA_PHL->position());
+            viz.visualizePlane(GA_EWR->planeType(), GA_EWR->origin(), GA_EWR->destination(), GA_EWR->position());
             viz.visualizePlane(GA_ORD->planeType(), GA_ORD->origin(), GA_ORD->destination(), GA_ORD->position());
             
             viz.update(timeStep);
